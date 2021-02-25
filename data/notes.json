@@ -1,13 +1,16 @@
 [
     {
+        "id": 1,
         "title": "Test Title",
         "text": "Test text"
     },
     {
+        "id": 2,
         "title": "Note Title",
         "text": "Note's text entry"
     },
     {
+        "id": 3,
         "title": "Another Note",
         "text": "Some more text"
     }

@@ -15,9 +15,14 @@ app.get("/notes", (req, res) => {
     res.sendFile(path.join(__dirname, "./public/notes.html"));
 });
 
+// gets notes from data to display on page
 app.get("/api/notes", (req, res) => {
     res.json(JSON.parse(notes));
 });
+
+// app.get("/api/notes/:note", (req, res) => {
+
+// })
 
 app.listen(PORT, () => {
     console.log(`Server now on port ${PORT}`);
