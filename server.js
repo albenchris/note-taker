@@ -1,38 +1,46 @@
+// Dependencies
 const express = require("express");
 const PORT = process.env.PORT || 3001;
 const app = express();
 const fs = require("fs");
 const path = require("path");
-// const uuid = require("uuid");
 let notesArr = fs.readFileSync("./data/notes.json", "utf8");
 
+// Middleware
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // gets notesArr from data to display on page
 app.get("/api/notes", (req, res) => {
-    notesArr = fs.readFileSync("./data/notes.json", "utf8")
+    notesArr = fs.readFileSync("./data/notes.json", "utf8");
     res.json(JSON.parse(notesArr));
 });
 
 // saves note into data/notes.json
 app.post("/api/notes", (req, res) => {
     const newNote = req.body;
+    newNote.id = notesArr.length + "-" + Math.floor(Math.random() * 1000000);
+
     notesArr = JSON.parse(notesArr);
-
-    newNote.id = notesArr.length.toString() + "-" + Math.floor(Math.random() * 1000000).toString();
-    // newNote.id = uuid.v1();
-    console.log(newNote);
-
-    
     notesArr.push(newNote);
+
     fs.writeFileSync(
         path.join(__dirname, "./data/notes.json"),
-        JSON.stringify(notesArr, null, 2) // or if readonly: (notesArr, newNote.id, 2)
+        JSON.stringify(notesArr, null, 2)
     );
 
     res.json(notesArr);
+});
+
+// deletes notes from data/notes.json
+app.delete("/api/notes/:id", (req, res) => {
+    notesArr = JSON.parse(notesArr);
+    const updatedNotesArr = notesArr.filter((deletedNote) => deletedNote.id !== req.params.id);
+
+    fs.writeFileSync("./data/notes.json", JSON.stringify(updatedNotesArr));
+
+    res.json(updatedNotesArr);
 });
 
 // html display start

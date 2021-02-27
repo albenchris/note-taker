@@ -54,8 +54,8 @@ const renderActiveNote = () => {
   hide(saveNoteBtn);
 
   if (activeNote.id) {
-    // noteTitle.setAttribute('readonly', true);
-    // noteText.setAttribute('readonly', true);
+    // noteTitle.setAttribute('readonly', true); // commented out in order for notes to be editable
+    // noteText.setAttribute('readonly', true); // commented out in order for notes to be editable
     noteTitle.value = activeNote.title;
     noteText.value = activeNote.text;
   } else {
